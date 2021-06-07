@@ -45,6 +45,7 @@ def map( value, fromLow, fromHigh, toLow, toHigh):  # map a value from one range
     
 def setup():
     
+    global p
     GPIO.setmode(GPIO.BOARD)      # use PHYSICAL GPIO Numbering
     GPIO.setup(trigPin, GPIO.OUT)   # set trigPin to OUTPUT mode
     GPIO.setup(echoPin, GPIO.IN)    # set echoPin to INPUT mode
@@ -52,8 +53,7 @@ def setup():
     GPIO.setup(servoPin, GPIO.OUT)   # Set servoPin to OUTPUT mode
     GPIO.output(servoPin, GPIO.LOW)  # Make servoPin output LOW level
 
-    
-    global p = GPIO.PWM(servoPin, 50)     # set Frequece to 50Hz
+    p = GPIO.PWM(servoPin, 50)     # set Frequece to 50Hz
     p.start(0)                     # Set initial Duty Cycle to 0
 
 def servoWrite(angle):      # make the servo rotate to specific angle, 0-180 
