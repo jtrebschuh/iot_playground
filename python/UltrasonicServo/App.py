@@ -66,11 +66,10 @@ def servoWrite(angle):      # make the servo rotate to specific angle, 0-180
 def loop():
     while(True):
         distance = getSonar() # get distance
-        print ("The distance is : %.2f cm"%(distance))
         angle = int(distance/10)*10
-        print ("Set Servo to Angle: %d"%(angle))
+        print ("Ddistance : %.2f cm, Angle: %d"%(distance, angle))
         servoWrite(distance)
-        time.sleep(1)
+        time.sleep(0.1)
    
 def destroy():
     p.stop()
