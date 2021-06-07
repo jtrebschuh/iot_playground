@@ -67,7 +67,7 @@ def loop():
     while(True):
         distance = getSonar() # get distance
         angle = int(distance/10)*10
-        print ("Ddistance : %.2f cm, Angle: %d"%(distance, angle))
+        print ("Distance : %.2f cm, Angle: %d"%(distance, angle))
         servoWrite(distance)
         time.sleep(0.1)
    
