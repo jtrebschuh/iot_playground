@@ -67,13 +67,19 @@ def loop():
     while(True):
         distance = getSonar() # get distance
         print ("The distance is : %.2f cm"%(distance))
+        angle = int(distance/10)*10
+        print ("Set Servo to Angle: %d"%(angle))
         servoWrite(distance)
         time.sleep(1)
-        
+   
+def destroy():
+    p.stop()
+    GPIO.cleanup()     
+    
 if __name__ == '__main__':     # Program entrance
     print ('Program is starting...')
     setup()
     try:
         loop()
     except KeyboardInterrupt:  # Press ctrl-c to end the program.
-        GPIO.cleanup()         # release GPIO resource
+        destroy()
