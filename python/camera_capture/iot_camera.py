@@ -70,7 +70,7 @@ async def main():
             # Upload the created file
             with open(upload_file_path, "rb") as data:
                 blob_client.upload_blob(data)
-            print("\Uploaded")
+            print("\nUploaded")
             payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
             status = 200  # set return status code
 
