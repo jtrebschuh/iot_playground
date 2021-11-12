@@ -70,13 +70,14 @@ async def main():
             # Upload the created file
             with open(upload_file_path, "rb") as data:
                 blob_client.upload_blob(data)
+            print("\Uploaded")
+            payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
+            status = 200  # set return status code
 
             method_response = MethodResponse.create_from_method_request(
                 method_request, status, payload
             )
             
-            payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
-            status = 200  # set return status code
             await device_client.send_method_response(method_response)  # send response
  
     async def generic_method_listener(device_client):
