@@ -25,7 +25,8 @@ try:
 
     # Create a local directory to hold blob data
     local_path = "./data"
-    os.mkdir(local_path)
+    if not os.path.exists(local_path):
+        os.mkdir(local_path)
 
     # Create a file in the local data directory to upload and download
     local_file_name = str(uuid.uuid4()) + ".jpg"
