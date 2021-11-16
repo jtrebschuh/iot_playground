@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from picamera import PiCamera
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
  
-async def main():
+def main():
     
     load_dotenv()
 
@@ -24,7 +24,7 @@ async def main():
     device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
  
     # connect the client.
-    await device_client.connect()
+    device_client.connect()
  
     # define behavior for handling methods
     async def method1_listener(device_client):
@@ -111,14 +111,11 @@ async def main():
     loop = asyncio.get_running_loop()
     user_finished = loop.run_in_executor(None, stdin_listener)
  
-    # Wait for user to indicate they are done listening for method calls
-    await user_finished
- 
     # Cancel listening
     listeners.cancel()
  
     # Finally, disconnect
-    await device_client.disconnect()
+    device_client.disconnect()
  
  
 def start_azure_iot():
