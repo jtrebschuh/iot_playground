@@ -54,7 +54,7 @@ def capture_and_upload() -> str:
             blob_client.upload_blob(data)
         
         logging.info("Uploaded to Azure Storage:" + upload_file_path)
-        blob_service_client.
+        
         gpiodevices.reset()
 
         return local_file_name
