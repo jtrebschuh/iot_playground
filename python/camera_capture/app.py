@@ -3,14 +3,17 @@ import gpiodevices
 import logging
 import threading
 import iot_camera
-from multiprocessing import Process
+import asyncio
 
 logging.basicConfig(level=logging.INFO)
 
 gpiodevices.setup()
 
-iot_thread = threading.Thread(target=iot_camera.main)
-iot_thread.start()
+loop = asyncio.get_running_loop()
+
+loop = asyncio.get_running_loop()
+user_finished = loop.run_in_executor(None, iot_camera.main)
+
 
 # iot_process = Process(target=iot_camera.main)
 # iot_process.start()
