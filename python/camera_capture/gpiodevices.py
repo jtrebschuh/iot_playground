@@ -18,7 +18,7 @@ def reset():
     GPIO.cleanup()                    # Release GPIO resource
 
 def setLedGreen(state: bool):
-    logging.info("set LED-Green:"+str(state))
+    #logging.info("set LED-Green:"+str(state))
     if state:
         GPIO.output(ledGreenPin, GPIO.HIGH)
     else:
