@@ -18,6 +18,8 @@ gpiodevices.setLedGreen(False)
 
 iot_thread = threading.Thread(target=iot_camera.start_azure_iot())
 
+iot_thread.start()
+
 while True:
     gpiodevices.setLedGreen(gpiodevices.getButtonState())
     time.sleep(0.05)
