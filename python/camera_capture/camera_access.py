@@ -34,7 +34,7 @@ def capture_and_upload() -> str:
             os.mkdir(local_path)
 
         # Create a file in the local data directory to upload and download
-        local_file_name = now.strftime("%H:%M:%S") + ".jpg"
+        local_file_name = now.strftime("%H-%M-%S") + ".jpg"
         upload_file_path = os.path.join(local_path, local_file_name)
 
         camera = PiCamera()
@@ -52,7 +52,7 @@ def capture_and_upload() -> str:
         with open(upload_file_path, "rb") as data:
             blob_client.upload_blob(data)
         
-        logging.info("Uploaded to Azure Storage:" + local_file_name)
+        logging.info("Uploaded to Azure Storage:" + upload_file_path)
         gpiodevices.reset()
 
         return local_file_name
