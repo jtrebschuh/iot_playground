@@ -6,6 +6,9 @@ import gpiodevices
 import logging
 from datetime import datetime
 
+
+camera = PiCamera()
+
 def capture_and_upload() -> str:
     try:
         logging.info("Capture Camera Image")
@@ -37,8 +40,6 @@ def capture_and_upload() -> str:
         local_file_name = now.strftime("%H-%M-%S") + ".jpg"
         upload_file_path = os.path.join(local_path, local_file_name)
 
-        camera = PiCamera()
-
         camera.capture(upload_file_path)
 
         logging.info("Image captured. Start upload")
@@ -53,6 +54,7 @@ def capture_and_upload() -> str:
             blob_client.upload_blob(data)
         
         logging.info("Uploaded to Azure Storage:" + upload_file_path)
+        blob_service_client.
         gpiodevices.reset()
 
         return local_file_name
