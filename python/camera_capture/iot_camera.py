@@ -9,6 +9,7 @@ import asyncio
 import threading
 import logging
 import json
+import time
 from six.moves import input
 from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import MethodResponse
@@ -19,6 +20,8 @@ import gpiodevices
 
 
 class IoT_Camera_Thread(threading.Thread):
+
+    __stopped = False
 
     # overriding constructor
     def __init__(self):
@@ -44,13 +47,10 @@ class IoT_Camera_Thread(threading.Thread):
         # connect the client.
         await self.device_client.connect()
 
-        # define behavior for halting the application
-        # def stdin_listener():
-        #     while True:
-        #         selection = input("Press Q to quit\n")
-        #         if selection == "Q" or selection == "q":
-        #             print("Quitting...")
-        #             break
+        #define behavior for halting the application
+        def stdin_listener():
+            while not self.__stopped:
+                time.sleep(0.1)
 
         # Schedule tasks for Method Listener
         self.listeners = asyncio.gather(
@@ -59,14 +59,15 @@ class IoT_Camera_Thread(threading.Thread):
         )
 
         # Run the stdin listener in the event loop
-        # loop = asyncio.get_running_loop()
-        # user_finished = loop.run_in_executor(None, stdin_listener)
+        loop = asyncio.get_running_loop()
+        user_finished = loop.run_in_executor(None, stdin_listener)
 
         # Wait for user to indicate they are done listening for method calls
-        # await user_finished
+        await user_finished
         
 
     async def stop(self):
+        self.__stopped = True
         # Cancel listening
         self.listeners.cancel()
         
