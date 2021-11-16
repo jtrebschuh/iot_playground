@@ -1,7 +1,5 @@
 import time
 import gpiodevices
-import RPi.GPIO as GPIO
-
 
 gpiodevices.setup()
 
@@ -10,4 +8,8 @@ time.sleep(5)
 gpiodevices.setLedYellow(True)
 time.sleep(5)
 
-gpiodevices.reset()
+gpiodevices.setLedYellow(False)
+gpiodevices.setLedGreen(False)
+while True:
+    gpiodevices.setLedGreen(gpiodevices.getButtonState())
+    time.sleep(0.1)
