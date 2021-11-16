@@ -3,14 +3,16 @@ import gpiodevices
 import logging
 import threading
 import iot_camera
+from multiprocessing import Process
 
 logging.basicConfig(level=logging.INFO)
 
 gpiodevices.setup()
 
-iot_thread = threading.Thread(target=iot_camera.main())
+iot_process = Process(target=iot_camera.main())
+iot_process.start()
 
-iot_thread.start()
+logging.info("iot_camera started")
 
 gpiodevices.setLedGreen(True)
 time.sleep(1)
