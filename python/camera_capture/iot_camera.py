@@ -52,6 +52,8 @@ class IoT_Camera_Thread(threading.Thread):
             await self.device_client.send_method_response(method_response)  # send response
  
     async def main(self):
+        
+        gpiodevices.setup()
         # The connection string for your device.
         conn_str = os.getenv("AZURE_IOT_CONNECTION_STRING")
         # The client object is used to interact with your Azure IoT hub.
