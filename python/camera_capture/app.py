@@ -3,6 +3,10 @@ import gpiodevices
 import logging
 import iot_camera
 from multiprocessing import Process
+from dotenv import load_dotenv
+from camera_access import capture_and_upload
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -19,6 +23,10 @@ time.sleep(1)
 gpiodevices.setLedYellow(False)
 gpiodevices.setLedGreen(False)
 
+buttonState = False
 while True:
-    gpiodevices.setLedGreen(gpiodevices.getButtonState())
+    tmp = gpiodevices.getButtonState()
+    if not buttonState and tmp:
+        capture_and_upload()
+    buttonState = tmp 
     time.sleep(0.05)
