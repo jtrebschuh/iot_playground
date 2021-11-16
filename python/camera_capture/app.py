@@ -3,7 +3,7 @@ import gpiodevices
 import RPi.GPIO as GPIO
 
 
-GPIO.setmode(GPIO.BOARD)      # use PHYSICAL GPIO Numbering
+gpiodevices.setup()
 
 gpiodevices.setLedGreen(True)
 time.sleep(5000)
