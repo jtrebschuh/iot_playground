@@ -118,7 +118,7 @@ class IoT_Camera_Thread(threading.Thread):
         #             break
 
         # Schedule tasks for Method Listener
-        listeners = asyncio.gather(
+        self.listeners = asyncio.gather(
             self.method1_listener(),
             self.generic_method_listener(),
         )
@@ -129,6 +129,7 @@ class IoT_Camera_Thread(threading.Thread):
 
         # Wait for user to indicate they are done listening for method calls
         # await user_finished
+        
 
     async def stop(self):
         # Cancel listening
