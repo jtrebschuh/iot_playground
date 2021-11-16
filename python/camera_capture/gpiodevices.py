@@ -28,7 +28,7 @@ def setLedYellow(state):
         GPIO.output(ledYellowPin, GPIO.LOW)
 
 def getButtonState() -> bool:
-    if GPIO.input(buttonPin)==GPIO.LOW: 
+    if GPIO.input(buttonPin)==GPIO.HIGH: 
         return False
     else:
         return True
