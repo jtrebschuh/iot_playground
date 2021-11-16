@@ -29,7 +29,7 @@ def capture_and_upload() -> str:
         now = datetime.now() # current date and time
 
         # Create a local directory to hold blob data
-        local_path = "./"+now.strftime("%d")
+        local_path = "./"+now.strftime("%Y-%m-%d")
         if not os.path.exists(local_path):
             os.mkdir(local_path)
 
