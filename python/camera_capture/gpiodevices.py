@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import logging
 
 ledGreenPin = 11
 ledYellowPin = 32
@@ -15,13 +16,15 @@ def reset():
     setLedYellow(False)
     GPIO.cleanup()                    # Release GPIO resource
 
-def setLedGreen(state):
+def setLedGreen(state: bool):
+    logging.info("set LED-Green:"+str(state))
     if state:
         GPIO.output(ledGreenPin, GPIO.HIGH)
     else:
         GPIO.output(ledGreenPin, GPIO.LOW)
 
-def setLedYellow(state):
+def setLedYellow(state: bool):
+    logging.info("set LED-Yellow:"+str(state))
     if state:
         GPIO.output(ledYellowPin, GPIO.HIGH)
     else:
