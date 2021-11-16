@@ -15,6 +15,8 @@ def setup():
 def reset():
     setLedGreen(False)
     setLedYellow(False)
+
+def cleanup():    
     GPIO.cleanup()                    # Release GPIO resource
 
 def setLedGreen(state: bool):
