@@ -33,7 +33,7 @@ class IoT_Camera_Thread(threading.Thread):
         self.loop.run_until_complete(self.main())
         
     # define behavior for handling methods
-    async def method1_listener(device_client):
+    async def method1_listener(self, device_client):
         while True:
             method_request = await device_client.receive_method_request(
                 "p"
@@ -51,7 +51,7 @@ class IoT_Camera_Thread(threading.Thread):
             )
             await device_client.send_method_response(method_response)  # send response
 
-    async def generic_method_listener(device_client):
+    async def generic_method_listener(self, device_client):
         while True:
             method_request = (
                 await device_client.receive_method_request()
