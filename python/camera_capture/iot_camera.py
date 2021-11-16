@@ -24,11 +24,10 @@ class IoT_Camera_Thread(threading.Thread):
 
     # define your own run method
     def run(self):
-        loop = asyncio.new_event_loop()
+        self.loop = asyncio.new_event_loop()
         #asyncio.set_event_loop(loop)
 
-        loop.run_until_complete(self.main())
-        loop.close()
+        self.loop.run_until_complete(self.main())
         
     # define behavior for handling methods
     async def method1_listener(self):
@@ -134,6 +133,8 @@ class IoT_Camera_Thread(threading.Thread):
     async def stop(self):
         # Cancel listening
         self.listeners.cancel()
+        
+        self.loop.close()
 
         # Finally, disconnect
         await self.device_client.disconnect()
