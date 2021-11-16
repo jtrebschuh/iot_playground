@@ -121,7 +121,7 @@ async def main():
     await device_client.disconnect()
  
  
-if __name__ == "__main__":
+def start_azure_iot():
     asyncio.run(main())
  
     # If using Python 3.6 or below, use the following code instead of asyncio.run(main()):
