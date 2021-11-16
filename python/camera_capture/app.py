@@ -1,5 +1,8 @@
 import time
 import gpiodevices
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 gpiodevices.setup()
 
