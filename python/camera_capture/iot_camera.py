@@ -27,7 +27,7 @@ class IoT_Camera_Thread(threading.Thread):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-        loop.run_until_complete(self.main(self))
+        loop.run_until_complete(self.main())
         loop.close()
  
     async def main(self):
