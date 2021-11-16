@@ -6,6 +6,7 @@ ledYellowPin = 32
 buttonPin = 12
 
 def setup():
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)      # use PHYSICAL GPIO Numbering
     GPIO.setup(ledGreenPin, GPIO.OUT)   # set ledPin to OUTPUT mode
     GPIO.setup(ledYellowPin, GPIO.OUT)   # set ledPin to OUTPUT mode

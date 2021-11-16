@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 
 gpiodevices.setup()
 
-iot_thread = threading.Thread(target=iot_camera.start_azure_iot())
+iot_thread = threading.Thread(target=iot_camera.main())
 
 iot_thread.start()
 
