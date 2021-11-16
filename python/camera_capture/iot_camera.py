@@ -32,37 +32,6 @@ class IoT_Camera_Thread(threading.Thread):
 
         self.loop.run_until_complete(self.main())
         
-    # define behavior for handling methods
-    async def method1_listener(self, device_client):
-        while True:
-            method_request = await device_client.receive_method_request(
-                "p"
-            )  # Wait for method1 calls
-            logging.info("executed method photo")
-
-            local_file_name = capture_and_upload()
-
-            payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
-            status = 200  # set return status code
-
-            logging.info("response: "+json.dumps(payload))
-            method_response = MethodResponse.create_from_method_request(
-                method_request, status, payload
-            )
-            await device_client.send_method_response(method_response)  # send response
-
-    async def generic_method_listener(self, device_client):
-        while True:
-            method_request = (
-                await device_client.receive_method_request()
-            )  # Wait for unknown method calls
-            payload = {"result": False, "data": "unknown method"}  # set response payload
-            status = 400  # set return status code
-            print("executed unknown method: " + method_request.name)
-            method_response = MethodResponse.create_from_method_request(
-                method_request, status, payload
-            )
-            await device_client.send_method_response(method_response)  # send response
 
     async def main(self):
         
@@ -85,8 +54,8 @@ class IoT_Camera_Thread(threading.Thread):
 
         # Schedule tasks for Method Listener
         self.listeners = asyncio.gather(
-            self.method1_listener(self.device_client),
-            self.generic_method_listener(self.device_client)
+            method1_listener(self.device_client),
+            generic_method_listener(self.device_client)
         )
 
         # Run the stdin listener in the event loop
@@ -105,3 +74,36 @@ class IoT_Camera_Thread(threading.Thread):
 
         # Finally, disconnect
         await self.device_client.disconnect()
+
+
+# define behavior for handling methods
+async def method1_listener(device_client):
+    while True:
+        method_request = await device_client.receive_method_request(
+            "p"
+        )  # Wait for method1 calls
+        logging.info("executed method photo")
+
+        local_file_name = capture_and_upload()
+
+        payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
+        status = 200  # set return status code
+
+        logging.info("response: "+json.dumps(payload))
+        method_response = MethodResponse.create_from_method_request(
+            method_request, status, payload
+        )
+        await device_client.send_method_response(method_response)  # send response
+
+async def generic_method_listener(device_client):
+    while True:
+        method_request = (
+            await device_client.receive_method_request()
+        )  # Wait for unknown method calls
+        payload = {"result": False, "data": "unknown method"}  # set response payload
+        status = 400  # set return status code
+        print("executed unknown method: " + method_request.name)
+        method_response = MethodResponse.create_from_method_request(
+            method_request, status, payload
+        )
+        await device_client.send_method_response(method_response)  # send response
