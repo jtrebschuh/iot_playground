@@ -9,8 +9,11 @@ logging.basicConfig(level=logging.INFO)
 
 gpiodevices.setup()
 
-iot_process = Process(target=iot_camera.main)
-iot_process.start()
+iot_thread = threading.Thread(target=iot_camera.main)
+iot_thread.start()
+
+# iot_process = Process(target=iot_camera.main)
+# iot_process.start()
 
 logging.info("iot_camera started")
 
