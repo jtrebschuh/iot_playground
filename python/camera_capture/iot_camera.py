@@ -7,6 +7,8 @@
 import os, uuid
 import asyncio
 import threading
+import logging
+import json
 from six.moves import input
 from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import MethodResponse
@@ -36,36 +38,20 @@ class IoT_Camera_Thread(threading.Thread):
             method_request = await self.device_client.receive_method_request(
                 "p"
             )  # Wait for method1 calls
-            print("executed method photo")
+            logging.info("executed method photo")
 
             local_file_name = capture_and_upload()
 
             payload = {"result": True, "data": "execute successfully", "image": local_file_name}  # set response payload
             status = 200  # set return status code
 
-            method_response = MethodResponse.create_from_method_request(
-                method_request, status, payload
-            )
-            
-            await self.device_client.send_method_response(method_response)  # send response
-
-    async def generic_method_listener(self):
-        while True:
-            method_request = (
-                await self.device_client.receive_method_request()
-            )  # Wait for unknown method calls
-            payload = {"result": False, "data": "unknown method"}  # set response payload
-            status = 400  # set return status code
-            print("executed unknown method: " + method_request.name)
+            logging.info("response: "+json.dumps(payload))
             method_response = MethodResponse.create_from_method_request(
                 method_request, status, payload
             )
             await self.device_client.send_method_response(method_response)  # send response
  
     async def main(self):
-        
-        load_dotenv()
-
         # The connection string for your device.
         conn_str = os.getenv("AZURE_IOT_CONNECTION_STRING")
         # The client object is used to interact with your Azure IoT hub.
@@ -84,8 +70,7 @@ class IoT_Camera_Thread(threading.Thread):
 
         # Schedule tasks for Method Listener
         self.listeners = asyncio.gather(
-            self.method1_listener(),
-            self.generic_method_listener(),
+            self.method1_listener()
         )
 
         # Run the stdin listener in the event loop

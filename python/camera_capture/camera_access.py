@@ -55,6 +55,8 @@ def capture_and_upload() -> str:
         logging.info("Uploaded to Azure Storage:" + local_file_name)
         gpiodevices.reset()
 
+        return local_file_name
+
     except Exception as ex:
         print('Exception:')
         print(ex)
